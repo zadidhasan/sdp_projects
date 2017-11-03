@@ -1,0 +1,89 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ask me</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Ask Me</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+     </a>
+      </li>
+      <li><a href="/ask/"> Ask a question </a></li>
+      <li><a href="/profile/"> Profile </a></li>
+      <li><a href="/Notifications/"> <span class="glyphicon glyphicon-globe"></span> Notifications </a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+    </ul>
+  </div>
+</nav>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".comment-reply-btn").click(function(event){
+    event.preventDefault();
+    $(this).parent().next(".comment-reply").fadeToggle();
+  })
+})
+</script>
+
+<div class="container">
+{% for post in post %}
+  <h3> {{post.title}} </h3>
+  <h5> Author: {{post.author}} </h5>
+  <h6>{{post.published_date}}</h6>
+  <hr/>
+  <h4> {{post.text}} </h4>
+  <hr/>
+{% endfor %}
+
+<div>
+  <p class = 'lead'> Comments </p>
+  {% for comment in comments %}
+  <blockquote>
+      <p>{{comment.content}}</p>
+        <footer> via {{ comment.user }} | {{ comment.timestamp|timesince }}  ago | 
+        {% if comment.children.count > 0 %}
+          {{comment.children.count}} comment{% if comment.children.count > 1%}s
+            {%endif%}|
+        {%endif%} <a class = "comment-reply-btn" href="#">Reply </a></footer> 
+      <div class = 'comment-reply' style = 'display: none;'>
+      {% for child_comment in comment.children %}
+      <blockquote>
+      <p>{{child_comment.content}}</p>
+        <footer> via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }}  ago</footer> 
+      </blockquote>
+      {% endfor %}
+      <form method = "POST" action = "." placeholder = 'x' >{% csrf_token %}
+    {{comment_form}}
+    <input type='hidden' name = 'parent_id' value = '{{comment.id}}'>
+    <input type='submit' value = 'reply to this comment' class = 'btn btn-default'>
+    </form>
+    <hr/>
+    </div>
+    </blockquote>
+  {% endfor %}
+  <form method = "POST" action = "." placeholder = 'x' >{% csrf_token %}
+    {{comment_form}}
+    <input type='submit' value = 'post a comment' class = 'btn btn-default'>
+    </form>
+</div>
+
+
+
+</body>
+</html>

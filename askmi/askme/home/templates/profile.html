@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ask me</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Ask Me</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+     </a>
+      </li>
+      <li><a href="/ask/"> Ask a question </a></li>
+      <li><a href="/profile/"> Profile </a></li>
+      <li><a href="/Notifications/"> <span class="glyphicon glyphicon-globe"></span> Notifications </a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid">
+	<a href="/editprofile/"> Edit Profile </a>
+</div>
+
+
+<div class="container">
+
+  <h4> username: {{user.username}} </h4>
+  <h4> email: {{user.email}} </h4>
+  </br>
+
+</div>
+
+</body>
+</html>
